@@ -1,0 +1,105 @@
+﻿@model List<MEDICAL_APP.Models.Medical>
+
+<h1>Your medicals</h1>
+
+
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+
+<body>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    <h6 class="display-4">Profil @HttpContext.Current.User.Identity.Name</h6>
+
+
+
+
+    @foreach (var i in Model)
+    {
+        <div id="medicalItem" style="border-style: inset; width: 500px; height: 355px; background-image: linear-gradient(315deg, #d9e4f5 0%, #f5e3e6 74%); border-color: black; margin-bottom: 5px ">
+            <h1>@i.MedicalName</h1>
+             
+            <h4>
+                Monday:
+                @String.Join(", ", i.Monday.Select(p => p.Hour).ToArray())
+            </h4>
+            <br />
+            <h4>
+                Tuesday:
+                @String.Join(", ", i.Tuesday.Select(p => p.Hour).ToArray())
+            </h4>
+            <br />
+            <h4>
+                Wednesday:
+                @String.Join(", ", i.Wednesday.Select(p => p.Hour).ToArray())
+            </h4>
+            <br />
+            <h4>
+                Thuersday:
+                @String.Join(", ", i.Thuersday.Select(p => p.Hour).ToArray())
+            </h4>
+            <br />
+            <h4>
+                Friday:
+                @String.Join(", ", i.Friday.Select(p => p.Hour).ToArray())
+            </h4>
+            <br />
+            <h4>
+                Saturday:
+                @String.Join(", ", i.Saturday.Select(p => p.Hour).ToArray())
+            </h4>
+            <br />
+            <h4>
+                Sunday:
+                @String.Join(", ", i.Sunday.Select(p => p.Hour).ToArray())
+            </h4>
+            <br />
+            <br />
+
+            @using (Html.BeginForm("Delete", "Profil", FormMethod.Post))
+            {
+                <button type="submit" value=@i.MedicalName name="medicalName">
+                    <h3>Delete</h3>
+                </button>
+            }
+
+        </div>
+
+
+    }
+
+
+
+
+    @if (Request.IsAuthenticated)
+    {
+
+        using (Html.BeginForm("Logout", "User", FormMethod.Post, new { id = "logoutForm" }))
+        {
+            <a href="javascript:document.getElementById('logoutForm').submit()"><h4>Logout</h4></a>
+        }
+
+    }
+    @if (Request.IsAuthenticated)
+    {
+        using (Html.BeginForm("Index", "Home", FormMethod.Get, new { id = "home" }))
+        {
+
+        <a href="javascript:document.getElementById('home').submit()"><h4>Add medical</h4></a>
+
+        }
+    }
+
+</body>
+@section scripts{
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+}
+
